@@ -316,14 +316,6 @@
 <section id="shop" class="py-24 px-6 bg-brand-charcoal border-y border-white/10 relative overflow-hidden">
   <div class="absolute inset-0 opacity-5" style="background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 1px,transparent 50px)"></div>
   <div class="max-w-7xl mx-auto w-full relative z-10 grid md:grid-cols-2 gap-12 items-center">
-    <div class="flex justify-center gap-6">
-      <div class="w-28 h-72 bg-white/5 backdrop-blur-md border border-white/15 rounded-t-full rounded-b-lg flex items-center justify-center">
-        <i class="fa-solid fa-shirt text-4xl text-white/40"></i>
-      </div>
-      <div class="w-28 bg-brand-red/15 backdrop-blur-md border border-brand-red/25 rounded-t-full rounded-b-lg flex items-center justify-center mt-10" style="height:22rem">
-        <i class="fa-solid fa-bag-shopping text-4xl text-brand-red/70"></i>
-      </div>
-    </div>
     <div>
       <h2 class="text-xs font-bold tracking-[.2em] text-brand-amber mb-2 uppercase">Zone 3 · Ground Level</h2>
       <h3 class="text-4xl md:text-5xl font-display font-bold mb-6">Smart Point</h3>
@@ -729,7 +721,7 @@ const clock = new THREE.Clock();
 
 // ── Google Gemini API ──────────────────────────
 // Replace with your actual Gemini API key
-const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE';
+const GEMINI_API_KEY = 'AQ.Ab8RN6LJm5g641fmgBwzK7WKqhp06KoO4iecPM6XBAxhSYHqCw';
 const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
 
 async function callAI(userPrompt, systemInstruction) {
