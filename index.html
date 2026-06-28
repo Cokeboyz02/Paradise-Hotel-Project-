@@ -1,0 +1,353 @@
+```html
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Paradise Inn | Luxury, Dining & Shopping</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#D32F2F',
+                            amber: '#FF6D00',
+                            charcoal: '#212121',
+                            light: '#F5F5F5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #212121;
+            color: #F5F5F5;
+            overflow-x: hidden;
+        }
+
+        /* 3D Canvas Background */
+        #webgl-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none; /* Let clicks pass through to DOM */
+        }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: rgba(33, 33, 33, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-light {
+            background: rgba(245, 245, 245, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #212121;
+        }
+
+        /* Wavy Headboard Texture Approximation */
+        .texture-headboard {
+            background-color: #4a3b32;
+            background-image: 
+                radial-gradient(circle at 50% 0%, #8a7360 10%, transparent 50%),
+                radial-gradient(circle at 10% 100%, #3d2f25 20%, transparent 60%),
+                radial-gradient(circle at 90% 100%, #5c4a3d 15%, transparent 50%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .texture-headboard::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.05' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        /* Neon Glow Effects */
+        .neon-text-red {
+            text-shadow: 0 0 10px rgba(211, 47, 47, 0.8), 0 0 20px rgba(211, 47, 47, 0.5);
+        }
+        .neon-border-amber {
+            box-shadow: 0 0 15px rgba(255, 109, 0, 0.5), inset 0 0 15px rgba(255, 109, 0, 0.2);
+            border-color: #FF6D00;
+        }
+
+        /* CSS 3D Floating Animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+            50% { transform: translateY(-15px) rotateX(2deg) rotateY(5deg); }
+            100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+        }
+        .floating-card {
+            animation: float 6s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+        .floating-card:nth-child(2) { animation-delay: -2s; }
+        .floating-card:nth-child(3) { animation-delay: -4s; }
+
+        /* Hide scrollbar for clean 3D look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #212121; }
+        ::-webkit-scrollbar-thumb { background: #D32F2F; border-radius: 4px; }
+        
+        section {
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-amber selection:text-white">
+
+    <!-- WebGL Background -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-display font-bold tracking-wider">
+                <span class="text-brand-red">PARADISE</span> <span class="text-white">INN</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide">
+                <a href="#stay" class="hover:text-brand-amber transition-colors">STAY</a>
+                <a href="#dine" class="hover:text-brand-amber transition-colors">DINE</a>
+                <a href="#shop" class="hover:text-brand-amber transition-colors">SHOP</a>
+                <a href="#contact" class="hover:text-brand-amber transition-colors">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center pt-20 px-6">
+        <div class="max-w-4xl w-full text-center z-10 glass p-10 md:p-16 rounded-3xl" id="hero-content">
+            <h1 class="text-4xl md:text-6xl font-display font-bold mb-6 uppercase tracking-tight leading-tight">
+                Experience <span class="text-brand-red neon-text-red">Luxury</span>,<br> 
+                Dining, & Shopping<br>
+                Under One Roof.
+            </h1>
+            <p class="text-lg md:text-xl text-gray-300 mb-10 font-light max-w-2xl mx-auto">
+                Welcome to Auraiya's premier destination. Explore our multi-level complex featuring Tishna Mega Mart, Royal Paradise Hall, and the Paradise Inn Hotel.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button class="w-full sm:w-auto px-8 py-4 bg-brand-amber text-white font-bold rounded-lg hover:bg-orange-600 transition-transform hover:scale-105 shadow-[0_0_15px_rgba(255,109,0,0.4)]">
+                    Book A Room
+                </button>
+                <button class="w-full sm:w-auto px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-brand-charcoal transition-all">
+                    Explore Complex
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zone 1: Accommodations -->
+    <section id="stay" class="min-h-screen relative flex items-center py-20 px-6">
+        <div class="absolute inset-0 texture-headboard z-0 opacity-60"></div>
+        <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <div>
+                <h2 class="text-sm font-bold tracking-[0.2em] text-brand-amber mb-2">ZONE 1: LUXURY STAY</h2>
+                <h3 class="text-4xl md:text-5xl font-display font-bold mb-6">Paradise Accommodations</h3>
+                <p class="text-gray-300 mb-8 text-lg">
+                    Rest in our meticulously designed rooms featuring custom ornamental decor, plush bedding, and modern comforts. Experience tranquility above the bustling city.
+                </p>
+                
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass p-4 rounded-xl flex items-center gap-3">
+                        <i class="fa-solid fa-wifi text-brand-amber text-xl"></i>
+                        <span class="font-medium">Free High-Speed Wi-Fi</span>
+                    </div>
+                    <div class="glass p-4 rounded-xl flex items-center gap-3">
+                        <i class="fa-solid fa-mug-hot text-brand-amber text-xl"></i>
+                        <span class="font-medium">Complimentary Breakfast</span>
+                    </div>
+                    <div class="glass p-4 rounded-xl flex items-center gap-3">
+                        <i class="fa-solid fa-concierge-bell text-brand-amber text-xl"></i>
+                        <span class="font-medium">24/7 Front Desk</span>
+                    </div>
+                    <div class="glass p-4 rounded-xl flex items-center gap-3">
+                        <i class="fa-solid fa-bed text-brand-amber text-xl"></i>
+                        <span class="font-medium">Premium Room Service</span>
+                    </div>
+                </div>
+            </div>
+            <div class="relative h-[500px] perspective-1000">
+                <!-- 3D CSS Product Cards -->
+                <div class="floating-card absolute top-10 right-10 w-64 glass p-6 rounded-2xl border-t border-l border-white/20 shadow-2xl">
+                    <div class="w-full h-32 bg-gray-800 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+                        <i class="fa-solid fa-key text-4xl text-gray-600"></i>
+                    </div>
+                    <h4 class="font-display font-bold text-xl mb-1">Executive Suite</h4>
+                    <p class="text-sm text-gray-400">Spacious layout with premium amenities.</p>
+                </div>
+                <div class="floating-card absolute bottom-10 left-0 w-72 glass p-6 rounded-2xl border-t border-l border-white/20 shadow-2xl z-20">
+                    <div class="w-full h-40 bg-gray-800 rounded-lg mb-4 flex items-center justify-center">
+                         <i class="fa-solid fa-bed text-5xl text-gray-600"></i>
+                    </div>
+                    <h4 class="font-display font-bold text-xl mb-1">Deluxe Double</h4>
+                    <p class="text-sm text-gray-400">Perfect for families, featuring our signature headboard design.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zone 2: Dining & Events -->
+    <section id="dine" class="min-h-screen py-20 px-6 flex items-center relative">
+        <div class="max-w-7xl mx-auto w-full">
+            <div class="text-center mb-16">
+                <h2 class="text-sm font-bold tracking-[0.2em] text-brand-amber mb-2">ZONE 2: CULINARY & EVENTS</h2>
+                <h3 class="text-4xl md:text-5xl font-display font-bold">Paradise Inn Restaurant <br>& Royal Paradise Hall</h3>
+            </div>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <div class="border-2 border-transparent neon-border-amber rounded-3xl p-8 glass relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-brand-amber/5 group-hover:bg-brand-amber/10 transition-colors"></div>
+                    <div class="relative z-10 flex flex-col h-full justify-between">
+                        <div>
+                            <i class="fa-solid fa-utensils text-4xl text-brand-amber mb-6"></i>
+                            <h4 class="text-2xl font-display font-bold mb-4">Fine Dining Experience</h4>
+                            <p class="text-gray-300 mb-6">Savor exquisite culinary creations in an atmosphere illuminated by warm, vibrant lighting. Full restaurant menu access is available for all guests.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-4 mt-auto">
+                            <button class="self-start text-brand-amber font-semibold flex items-center gap-2 hover:text-white transition-colors py-2">
+                                View Menu <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <button onclick="openChefModal()" class="bg-brand-amber/10 border border-brand-amber/30 text-brand-amber px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:bg-brand-amber hover:text-white transition-all shadow-[0_0_10px_rgba(255,109,0,0.2)]">
+                                ✨ Ask AI Chef
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-2 border-brand-red/30 rounded-3xl p-8 glass relative overflow-hidden group">
+                     <div class="absolute inset-0 bg-brand-red/5 group-hover:bg-brand-red/10 transition-colors"></div>
+                     <div class="relative z-10 flex flex-col h-full justify-between">
+                        <div>
+                            <i class="fa-solid fa-champagne-glasses text-4xl text-brand-red mb-6"></i>
+                            <h4 class="text-2xl font-display font-bold mb-4">Royal Paradise Hall</h4>
+                            <p class="text-gray-300 mb-6">The mid-level premium banquet space. Ideal for weddings, corporate events, and grand celebrations, structured exactly as seen on our majestic facade.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-4 mt-auto">
+                            <button class="self-start text-brand-red font-semibold flex items-center gap-2 hover:text-white transition-colors py-2">
+                                Book Event Space <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                            <button onclick="openEventModal()" class="bg-brand-red/10 border border-brand-red/30 text-brand-red px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:bg-brand-red hover:text-white transition-all shadow-[0_0_10px_rgba(211,47,47,0.2)]">
+                                ✨ Plan AI Event
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Zone 3: Mega Mart -->
+    <section id="shop" class="py-24 px-6 bg-brand-charcoal border-y border-white/10 relative overflow-hidden">
+        <!-- Abstract CSS Background for Mart -->
+        <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 1px, transparent 50px);"></div>
+        
+        <div class="max-w-7xl mx-auto w-full relative z-10 grid md:grid-cols-2 gap-12 items-center">
+            <div class="order-2 md:order-1 flex justify-center gap-6 perspective-1000">
+                <!-- Abstract Mannequins -->
+                <div class="w-32 h-80 bg-white/5 backdrop-blur-md border border-white/20 rounded-t-full rounded-b-lg flex items-center justify-center floating-card">
+                     <i class="fa-solid fa-shirt text-4xl text-white/50"></i>
+                </div>
+                <div class="w-32 h-96 bg-brand-red/20 backdrop-blur-md border border-brand-red/30 rounded-t-full rounded-b-lg flex items-center justify-center floating-card mt-12">
+                    <i class="fa-solid fa-bag-shopping text-4xl text-brand-red/80"></i>
+                </div>
+            </div>
+            <div class="order-1 md:order-2">
+                <h2 class="text-sm font-bold tracking-[0.2em] text-brand-amber mb-2">ZONE 3: GROUND LEVEL</h2>
+                <h3 class="text-4xl md:text-5xl font-display font-bold mb-6">Tishna Mega Mart</h3>
+                <p class="text-gray-300 text-lg mb-6">
+                    Step out of the hotel and directly into retail paradise. Tishna Mega Mart occupies our entire ground floor, offering the latest styles at the lowest prices.
+                </p>
+                <p class="text-sm text-gray-400 border-l-2 border-brand-amber pl-4 mb-6">
+                    Convenience integrated into the architecture. Shop for apparel, daily needs, and exclusives without ever leaving the complex premises.
+                </p>
+                <button onclick="openShopperModal()" class="bg-white/10 border border-white/30 text-white px-6 py-3 rounded-lg font-semibold flex items-center gap-2 hover:bg-white hover:text-brand-charcoal transition-all">
+                    ✨ Ask AI Personal Shopper
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Amenities & Policy Directory -->
+    <section class="py-20 px-6">
+        <div class="max-w-7xl mx-auto w-full">
+            <h3 class="text-3xl font-display font-bold mb-12 text-center">Verified Amenities & Policies</h3>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Popular -->
+                <div class="glass p-6 rounded-2xl">
+                    <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Popular</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li><i class="fa-solid fa-check text-green-400 mr-2"></i> Free Breakfast</li>
+                        <li><i class="fa-solid fa-check text-green-400 mr-2"></i> Free Wi-Fi</li>
+                        <li><i class="fa-solid fa-check text-green-400 mr-2"></i> Dedicated Parking</li>
+                        <li><i class="fa-solid fa-check text-green-400 mr-2"></i> In-house Restaurant</li>
+                    </ul>
+                </div>
+                <!-- Food & Drink -->
+                <div class="glass p-6 rounded-2xl">
+                    <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Food & Drink</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li><i class="fa-solid fa-bell-concierge text-gray-400 mr-2"></i> Room Service</li>
+                        <li><i class="fa-solid fa-utensils text-gray-400 mr-2"></i> Full Menu Access</li>
+                    </ul>
+                </div>
+                <!-- Services -->
+                <div class="glass p-6 rounded-2xl">
+                    <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Services & Pools</h4>
+                    <ul class="space-y-3 text-gray-300">
+                        <li><i class="fa-solid fa-clock text-gray-400 mr-2"></i> 24-Hr Front Desk</li>
+                        <li><i class="fa-solid fa-shirt text-gray-400 mr-2"></i> Full-service Laundry</li>
+                        <li><i class="fa-solid fa-van-shuttle text-gray-400 mr-2"></i> Local Shuttle</li>
+                        <li class="text-brand-red/80"><i class="fa-solid fa-xmark mr-2"></i> No Hot Tub Available</li>
+                    </ul>
+                </div>
+                <!-- Payments -->
+                <div class="glass p-6 rounded-2xl">
+                    <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Accepted Payments</h4>
+                    <div class="flex flex-wrap gap-4 mt-4">
+                        <i class="fa-brands fa-cc-visa text-3xl text-gray-300"></i>
+                        <i class="fa-brands fa-cc-mastercard text-3xl text-gray-300"></i>
+                        <i class="fa-brands fa-google-pay text-3xl text-gray-300"></i>
+                        <i class="fa-solid fa-money-bill-wave text-3xl text-gray-300" title="Cash"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Concierge Floating Button -->
+    <button onclick="toggleConcierge()" class="fixed bottom-24 right-6 w-14 h-14 bg-brand-red text-white rounded-full shadow-[0_0_20px_rgba(211,47,47,0.6)] flex items-center justify-center text-2xl hover:scale-110 transition-transform z-[60]">
+        ✨
+    </button>
+
+    <!-- AI Concierge Modal Chat -->
+    <div id="concierge-modal" class="fixed bottom-40 right-6 w-[350px] max-w-[calc(100vw-48px)] h-[500px] glass border border-brand-red/30 rounded-2xl z-[60] flex flex-col hidden
