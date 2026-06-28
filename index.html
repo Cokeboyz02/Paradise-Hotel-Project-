@@ -51,7 +51,7 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            pointer-events: none; /* Let clicks pass through to DOM */
+            pointer-events: none;
         }
 
         /* Glassmorphism Utilities */
@@ -121,6 +121,10 @@
             position: relative;
             z-index: 10;
         }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
     </style>
 </head>
 <body class="antialiased selection:bg-brand-amber selection:text-white">
@@ -136,7 +140,7 @@
             </div>
             <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide">
                 <a href="#stay" class="hover:text-brand-amber transition-colors">STAY</a>
-                <a href="#dine" class="hover:text-brand-amber transition-colors">DINE</a>
+                <a href="#dine" class="hover:text-brand-amber transition-colors">DINE & EVENTS</a>
                 <a href="#shop" class="hover:text-brand-amber transition-colors">SHOP</a>
                 <a href="#contact" class="hover:text-brand-amber transition-colors">CONTACT</a>
             </div>
@@ -196,7 +200,6 @@
                 </div>
             </div>
             <div class="relative h-[500px] perspective-1000">
-                <!-- 3D CSS Product Cards -->
                 <div class="floating-card absolute top-10 right-10 w-64 glass p-6 rounded-2xl border-t border-l border-white/20 shadow-2xl">
                     <div class="w-full h-32 bg-gray-800 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
                         <i class="fa-solid fa-key text-4xl text-gray-600"></i>
@@ -224,6 +227,7 @@
             </div>
             
             <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Dining Card -->
                 <div class="border-2 border-transparent neon-border-amber rounded-3xl p-8 glass relative overflow-hidden group">
                     <div class="absolute inset-0 bg-brand-amber/5 group-hover:bg-brand-amber/10 transition-colors"></div>
                     <div class="relative z-10 flex flex-col h-full justify-between">
@@ -243,6 +247,7 @@
                     </div>
                 </div>
 
+                <!-- Events Card -->
                 <div class="border-2 border-brand-red/30 rounded-3xl p-8 glass relative overflow-hidden group">
                      <div class="absolute inset-0 bg-brand-red/5 group-hover:bg-brand-red/10 transition-colors"></div>
                      <div class="relative z-10 flex flex-col h-full justify-between">
@@ -267,12 +272,10 @@
 
     <!-- Zone 3: Mega Mart -->
     <section id="shop" class="py-24 px-6 bg-brand-charcoal border-y border-white/10 relative overflow-hidden">
-        <!-- Abstract CSS Background for Mart -->
         <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 1px, transparent 50px);"></div>
         
         <div class="max-w-7xl mx-auto w-full relative z-10 grid md:grid-cols-2 gap-12 items-center">
             <div class="order-2 md:order-1 flex justify-center gap-6 perspective-1000">
-                <!-- Abstract Mannequins -->
                 <div class="w-32 h-80 bg-white/5 backdrop-blur-md border border-white/20 rounded-t-full rounded-b-lg flex items-center justify-center floating-card">
                      <i class="fa-solid fa-shirt text-4xl text-white/50"></i>
                 </div>
@@ -301,7 +304,6 @@
         <div class="max-w-7xl mx-auto w-full">
             <h3 class="text-3xl font-display font-bold mb-12 text-center">Verified Amenities & Policies</h3>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Popular -->
                 <div class="glass p-6 rounded-2xl">
                     <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Popular</h4>
                     <ul class="space-y-3 text-gray-300">
@@ -311,7 +313,6 @@
                         <li><i class="fa-solid fa-check text-green-400 mr-2"></i> In-house Restaurant</li>
                     </ul>
                 </div>
-                <!-- Food & Drink -->
                 <div class="glass p-6 rounded-2xl">
                     <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Food & Drink</h4>
                     <ul class="space-y-3 text-gray-300">
@@ -319,7 +320,6 @@
                         <li><i class="fa-solid fa-utensils text-gray-400 mr-2"></i> Full Menu Access</li>
                     </ul>
                 </div>
-                <!-- Services -->
                 <div class="glass p-6 rounded-2xl">
                     <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Services & Pools</h4>
                     <ul class="space-y-3 text-gray-300">
@@ -329,7 +329,6 @@
                         <li class="text-brand-red/80"><i class="fa-solid fa-xmark mr-2"></i> No Hot Tub Available</li>
                     </ul>
                 </div>
-                <!-- Payments -->
                 <div class="glass p-6 rounded-2xl">
                     <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Accepted Payments</h4>
                     <div class="flex flex-wrap gap-4 mt-4">
@@ -354,7 +353,7 @@
             <h3 class="font-display font-bold flex items-center gap-2">✨ AI Concierge</h3>
             <button onclick="toggleConcierge()" class="hover:text-gray-200"><i class="fa-solid fa-xmark text-xl"></i></button>
         </div>
-        <div id="chat-history" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 scroll-smooth">
+        <div id="chat-history" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 scroll-smooth custom-scrollbar">
             <div class="bg-white/10 p-3 rounded-lg rounded-tl-none w-11/12 text-sm text-gray-200 shadow-sm border border-white/5">
                 Welcome to Hotel Paradise Inn! I'm your AI Concierge. How can I assist you today? 
                 <br><br>Try asking:<br>
@@ -469,47 +468,24 @@
         </div>
     </div>
 
-    <!-- Footer & Contact -->
-    <footer id="contact" class="bg-[#151515] pt-20 pb-32 px-6 border-t border-white/10">
-        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12">
-            <div>
-                <h3 class="text-3xl font-display font-bold mb-6">Hotel Paradise Inn</h3>
-                <p class="text-gray-400 mb-8 max-w-sm">Experience luxury, dining, and shopping under one roof in the heart of Auraiya.</p>
-                
-                <div class="space-y-4">
-                    <a href="tel:+917417029202" class="flex items-center gap-4 text-lg hover:text-brand-amber transition-colors group">
-                        <div class="w-12 h-12 rounded-full glass flex items-center justify-center group-hover:bg-brand-amber group-hover:text-white transition-colors">
-                            <i class="fa-solid fa-phone"></i>
-                        </div>
-                        +91 7417029202
-                    </a>
-                    <a href="mailto:hotelparadiseinnauraiya@gmail.com" class="flex items-center gap-4 text-lg hover:text-brand-amber transition-colors group">
-                        <div class="w-12 h-12 rounded-full glass flex items-center justify-center group-hover:bg-brand-amber group-hover:text-white transition-colors">
-                            <i class="fa-solid fa-envelope"></i>
-                        </div>
-                        <span class="break-all">hotelparadiseinnauraiya@gmail.com</span>
-                    </a>
-                    <div class="flex items-center gap-4 text-lg text-gray-300">
-                        <div class="w-12 h-12 rounded-full glass flex items-center justify-center">
-                            <i class="fa-solid fa-location-dot"></i>
-                        </div>
-                        Auraiya, Uttar Pradesh, India
-                    </div>
-                </div>
+    <!-- Footer & Contact (Updated with User Specs) -->
+    <footer id="contact" class="bg-black/80 py-16 border-t border-white/10 relative z-10 backdrop-blur-md pb-32 md:pb-16">
+        <div class="container mx-auto px-6 max-w-4xl text-center">
+            <h2 class="text-3xl md:text-4xl font-display font-bold mb-6 text-white">Visit Hotel Paradise Inn</h2>
+            <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+                Local Main Rd Etawah, Etawah Kanpur Hwy,<br>
+                in front of Punjab National Bank,<br>
+                Hashmat Nagar, Auraiya, Uttar Pradesh 206122
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+                <a href="https://www.google.com/maps/place/FG77%2BH42+HOTEL+PARADISE+INN,+Local+Main+Rd+Etawah,+Etawah+Kanpur+Hwy,+in+front+of+Punjab+National+Bank,+Hashmat+Nagar,+Auraiya,+Uttar+Pradesh+206122/@26.4571657,79.5138034,18z/data=!4m6!3m5!1s0x399df3b7b87591e9:0xd6e0b74991299ebb!8m2!3d26.4571273!4d79.5151552!16s%2Fg%2F11qpvvm7cp?utm_campaign=ml-ardl&g_ep=Eg1tbF8yMDI2MDYyNF8wIOC7DCoASAJQAQ%3D%3D" target="_blank" rel="noopener noreferrer" class="bg-brand-amber text-brand-charcoal px-8 py-3 rounded-xl font-bold hover:bg-yellow-500 transition-colors flex items-center gap-2 shadow-[0_0_15px_rgba(255,193,7,0.3)]">
+                    <i class="fa-solid fa-map-location-dot"></i> View on Google Maps
+                </a>
+                <button class="bg-white/10 border border-white/20 text-white px-8 py-3 rounded-xl font-bold hover:bg-white/20 transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-phone"></i> Contact Us
+                </button>
             </div>
-            
-            <div class="h-80 rounded-2xl overflow-hidden glass p-2">
-                <!-- Google Maps Embed Placeholder -->
-                <iframe 
-                    src="https://maps.app.goo.gl/TZmDHgxpSFfuYRLz7" 
-                    width="100%" 
-                    height="100%" 
-                    style="border:0; border-radius: 0.75rem;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
-            </div>
+            <p class="text-gray-500 text-sm">© 2026 Hotel Paradise Inn, Auraiya. All rights reserved.</p>
         </div>
     </footer>
 
@@ -546,9 +522,7 @@
     </div>
 
     <!-- Scripts -->
-    <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- GSAP -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
@@ -566,7 +540,7 @@
         });
 
         // --------------------------------------------------------
-        // THREE.JS IMPLEMENTATION: Procedural Building Structure
+        // THREE.JS IMPLEMENTATION
         // --------------------------------------------------------
         const canvas = document.getElementById('webgl-canvas');
         const scene = new THREE.Scene();
@@ -577,7 +551,6 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-        // Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
         scene.add(ambientLight);
         
@@ -593,197 +566,107 @@
         amberAccentLight.position.set(5, -5, 5);
         scene.add(amberAccentLight);
 
-        // Building Group
         const building = new THREE.Group();
         scene.add(building);
 
-        // Materials
-        const facadeMaterial = new THREE.MeshStandardMaterial({ 
-            color: 0x333333, 
-            roughness: 0.2, 
-            metalness: 0.8 
-        });
-        const glassMaterial = new THREE.MeshStandardMaterial({ 
-            color: 0x88ccff, 
-            transparent: true, 
-            opacity: 0.3, 
-            roughness: 0.1, 
-            metalness: 1.0 
-        });
-        const redTrimMaterial = new THREE.MeshStandardMaterial({ 
-            color: 0xD32F2F, 
-            emissive: 0x550000 
-        });
+        const facadeMaterial = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.2, metalness: 0.8 });
+        const glassMaterial = new THREE.MeshStandardMaterial({ color: 0x88ccff, transparent: true, opacity: 0.3, roughness: 0.1, metalness: 1.0 });
+        const redTrimMaterial = new THREE.MeshStandardMaterial({ color: 0xD32F2F, emissive: 0x550000 });
 
-        // Construct Procedural 3-Tier Building (Inspired by image 1)
-        // Level 1: Tishna Mega Mart (Ground)
-        const lvl1Geo = new THREE.BoxGeometry(16, 4, 8);
-        const lvl1 = new THREE.Mesh(lvl1Geo, glassMaterial);
+        const lvl1 = new THREE.Mesh(new THREE.BoxGeometry(16, 4, 8), glassMaterial);
         lvl1.position.y = -6;
         building.add(lvl1);
 
-        // Level 2: Royal Paradise Hall (Mid)
-        const lvl2Geo = new THREE.BoxGeometry(18, 3, 9);
-        const lvl2 = new THREE.Mesh(lvl2Geo, facadeMaterial);
+        const lvl2 = new THREE.Mesh(new THREE.BoxGeometry(18, 3, 9), facadeMaterial);
         lvl2.position.y = -2;
         building.add(lvl2);
         
-        // Red Trim for Level 2
         const trim2 = new THREE.Mesh(new THREE.BoxGeometry(18.2, 0.5, 9.2), redTrimMaterial);
         trim2.position.y = -0.5;
         building.add(trim2);
 
-        // Level 3: Hotel & Restaurant (Top)
-        const lvl3Geo = new THREE.BoxGeometry(16, 5, 8);
-        const lvl3 = new THREE.Mesh(lvl3Geo, facadeMaterial);
+        const lvl3 = new THREE.Mesh(new THREE.BoxGeometry(16, 5, 8), facadeMaterial);
         lvl3.position.y = 2.5;
         building.add(lvl3);
 
-        const topGlassGeo = new THREE.BoxGeometry(14, 3, 8.2);
-        const topGlass = new THREE.Mesh(topGlassGeo, glassMaterial);
+        const topGlass = new THREE.Mesh(new THREE.BoxGeometry(14, 3, 8.2), glassMaterial);
         topGlass.position.y = 2.5;
         building.add(topGlass);
 
-        // Top Roof Trim
         const roofTrim = new THREE.Mesh(new THREE.BoxGeometry(16.5, 0.8, 8.5), redTrimMaterial);
         roofTrim.position.y = 5.2;
         building.add(roofTrim);
 
-        // Initial Camera Position
         camera.position.z = 18;
         camera.position.y = 0;
         camera.position.x = 0;
 
-        // GSAP ScrollTrigger Physics for 3D Camera & Object
-        // Morph the building rotation and camera position based on scroll zones
-        
-        // Hero -> Stay (Moves camera to look at the top hotel tier)
         gsap.to(camera.position, {
-            y: 5,
-            z: 12,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#stay",
-                start: "top bottom",
-                end: "center center",
-                scrub: 1
-            }
+            y: 5, z: 12, ease: "none",
+            scrollTrigger: { trigger: "#stay", start: "top bottom", end: "center center", scrub: 1 }
         });
         gsap.to(building.rotation, {
-            y: 0.5,
-            x: -0.1,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#stay",
-                start: "top bottom",
-                end: "center center",
-                scrub: 1
-            }
+            y: 0.5, x: -0.1, ease: "none",
+            scrollTrigger: { trigger: "#stay", start: "top bottom", end: "center center", scrub: 1 }
         });
-
-        // Stay -> Dine (Moves camera to look at mid hall tier)
         gsap.to(camera.position, {
-            y: -1,
-            z: 14,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#dine",
-                start: "top bottom",
-                end: "center center",
-                scrub: 1
-            }
+            y: -1, z: 14, ease: "none",
+            scrollTrigger: { trigger: "#dine", start: "top bottom", end: "center center", scrub: 1 }
         });
         gsap.to(building.rotation, {
-            y: -0.5,
-            x: 0,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#dine",
-                start: "top bottom",
-                end: "center center",
-                scrub: 1
-            }
+            y: -0.5, x: 0, ease: "none",
+            scrollTrigger: { trigger: "#dine", start: "top bottom", end: "center center", scrub: 1 }
         });
-
-        // Dine -> Shop (Moves camera to look at ground mega mart tier)
         gsap.to(camera.position, {
-            y: -6,
-            z: 12,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#shop",
-                start: "top bottom",
-                end: "center center",
-                scrub: 1
-            }
+            y: -6, z: 12, ease: "none",
+            scrollTrigger: { trigger: "#shop", start: "top bottom", end: "center center", scrub: 1 }
         });
         gsap.to(building.rotation, {
-            y: 0.2,
-            x: 0.1,
-            ease: "none",
-            scrollTrigger: {
-                trigger: "#shop",
-                start: "top bottom",
-                end: "center center",
-                scrub: 1
-            }
+            y: 0.2, x: 0.1, ease: "none",
+            scrollTrigger: { trigger: "#shop", start: "top bottom", end: "center center", scrub: 1 }
         });
 
-        // Hover Interactive Physics (Raycaster logic for building levels)
-        const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
-        
         window.addEventListener('mousemove', (event) => {
-            // Normalize mouse coordinates
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-            
-            // Slight parallax on building based on mouse movement
             gsap.to(building.rotation, {
-                y: mouse.x * 0.1 + building.rotation.y, // Add to current scroll rotation
+                y: mouse.x * 0.1 + building.rotation.y,
                 x: -mouse.y * 0.1 + building.rotation.x,
-                duration: 2,
-                ease: "power2.out",
-                overwrite: "auto"
+                duration: 2, ease: "power2.out", overwrite: "auto"
             });
         });
 
-        // Animation Loop
         const clock = new THREE.Clock();
         function animate() {
             requestAnimationFrame(animate);
             const time = clock.getElapsedTime();
-            
-            // Gentle ambient floating of the building
             building.position.y = Math.sin(time * 0.5) * 0.5;
-            
-            // Pulse the accent lights
             redAccentLight.intensity = 2 + Math.sin(time * 2) * 1;
             amberAccentLight.intensity = 2 + Math.cos(time * 1.5) * 1;
-
             renderer.render(scene, camera);
         }
 
-        // Handle Resize
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Start WebGL after DOM load
         window.onload = function() {
             animate();
         };
 
         // --------------------------------------------------------
-        // GEMINI API INTEGRATIONS
+        // GEMINI API INTEGRATION & LOGIC
         // --------------------------------------------------------
-        const apiKey = "AQ.Ab8RN6LJm5g641fmgBwzK7WKqhp06KoO4iecPM6XBAxhSYHqCw"; // Set by execution environment
-
-        // Helper: Exponential Backoff API Caller
+        
         async function callGeminiAPI(prompt, systemInstruction) {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${AQ.Ab8RN6LJm5g641fmgBwzK7WKqhp06KoO4iecPM6XBAxhSYHqCw}`;
+            // Using the user-provided API key
+            const apiKey = "AQ.Ab8RN6LJm5g641fmgBwzK7WKqhp06KoO4iecPM6XBAxhSYHqCw";
+            // Using the correct model endpoint for text generation
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            
             const payload = {
                 contents: [{ parts: [{ text: prompt }] }],
                 systemInstruction: { parts: [{ text: systemInstruction }] }
@@ -816,7 +699,6 @@
             }
         }
 
-        // Helper: Format Markdown to simple HTML
         function formatMarkdown(text) {
             return text
                 .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
@@ -835,11 +717,10 @@
             conciergeOpen = !conciergeOpen;
             if (conciergeOpen) {
                 conciergeModal.classList.remove('hidden');
-                // Small delay to allow display:block to apply before animating opacity
                 setTimeout(() => conciergeModal.classList.remove('opacity-0'), 10);
             } else {
                 conciergeModal.classList.add('opacity-0');
-                setTimeout(() => conciergeModal.classList.add('hidden'), 300); // Wait for transition
+                setTimeout(() => conciergeModal.classList.add('hidden'), 300);
             }
         }
 
@@ -875,7 +756,6 @@
             const prompt = chatInput.value.trim();
             if (!prompt) return;
 
-            // UI Updates
             chatInput.value = '';
             appendMessage(prompt, true);
             const typingId = appendTypingIndicator();
@@ -888,8 +768,6 @@
             If asked for an itinerary, suggest local nearby attractions in or around Auraiya.`;
 
             const reply = await callGeminiAPI(prompt, systemPrompt);
-            
-            // Remove typing indicator and show response
             document.getElementById(typingId).remove();
             appendMessage(reply, false);
         }
@@ -933,7 +811,6 @@
             const craving = cravingInput.value.trim();
             if (!craving) return;
 
-            // UI Swap
             chefInputArea.classList.add('hidden');
             chefLoading.classList.remove('hidden');
 
@@ -945,7 +822,6 @@
 
             const reply = await callGeminiAPI(craving, systemPrompt);
 
-            // UI Swap
             chefLoading.classList.add('hidden');
             chefResultContent.innerHTML = formatMarkdown(reply);
             chefResultArea.classList.remove('hidden');
