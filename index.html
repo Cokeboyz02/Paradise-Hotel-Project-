@@ -1,3 +1,9 @@
+Please view (visualize) these image and change in code according to you.
+Only interchange these images from this code.
+Give me full & final HTML code for my website.
+
+I also attached HTML code :
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -19,11 +25,14 @@
     }
   </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- EmailJS -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <style>
     *{box-sizing:border-box}
     body{background:#212121;color:#F5F5F5;overflow-x:hidden;font-family:'Inter',sans-serif}
+
+    /* ── Loader ── */
     #loader{position:fixed;inset:0;z-index:9999;background:#212121;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;transition:opacity .6s ease,visibility .6s ease}
     #loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
     .loader-bar{width:200px;height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
@@ -31,47 +40,84 @@
     @keyframes loadFill{to{width:100%}}
     .loader-spin{width:56px;height:56px;border:3px solid rgba(211,47,47,.2);border-top-color:#D32F2F;border-radius:50%;animation:spin .9s linear infinite}
     @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* ── WebGL ── */
     #webgl-canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none}
+
+    /* ── Glass ── */
     .glass{background:rgba(33,33,33,.65);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.1)}
     .glass-light{background:rgba(245,245,245,.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.25);color:#212121}
+
+    /* ── Glow ── */
     .neon-red{text-shadow:0 0 12px rgba(211,47,47,.9),0 0 28px rgba(211,47,47,.5)}
     .neon-border-amber{box-shadow:0 0 18px rgba(255,109,0,.45),inset 0 0 14px rgba(255,109,0,.15);border-color:#FF6D00}
     .btn-amber{background:#FF6D00;box-shadow:0 0 18px rgba(255,109,0,.45);transition:all .3s}
     .btn-amber:hover{background:#e65c00;box-shadow:0 0 32px rgba(255,109,0,.7);transform:scale(1.04)}
     .btn-red{background:#D32F2F;box-shadow:0 0 18px rgba(211,47,47,.45);transition:all .3s}
     .btn-red:hover{background:#b71c1c;transform:scale(1.04)}
+
     section{position:relative;z-index:10}
+
+    /* ── Headboard texture ── */
     .texture-headboard{background-color:#4a3b32;background-image:radial-gradient(circle at 50% 0%,#8a7360 10%,transparent 50%),radial-gradient(circle at 10% 100%,#3d2f25 20%,transparent 60%)}
+
+    /* ── Zone cards ── */
     .zone-card{transition:transform .35s ease,box-shadow .35s ease}
     .zone-card:hover{transform:translateY(-6px) rotateX(1deg);box-shadow:0 28px 60px rgba(0,0,0,.55)}
+
+    /* ── Food grid ── */
     .food-card img{transition:transform .4s ease}
     .food-card:hover img{transform:scale(1.06)}
     .food-card{overflow:hidden}
+
+    /* ── Hall slider ── */
     .hall-slide{display:none}
     .hall-slide.active{display:block}
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar{width:8px}
+    ::-webkit-scrollbar-track{background:#212121}
+    ::-webkit-scrollbar-thumb{background:#D32F2F;border-radius:4px}
+    .inner-scroll::-webkit-scrollbar{width:5px}
+    .inner-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:3px}
+
+    /* ── Modals ── */
     .modal-wrap{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.82);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:16px}
     .modal-wrap.open{display:flex}
+
+    /* ── Concierge ── */
     #concierge-modal{position:fixed;bottom:140px;right:24px;width:360px;max-width:calc(100vw - 48px);height:500px;z-index:60;display:none;flex-direction:column;border-radius:1rem;overflow:hidden}
     #concierge-modal.open{display:flex}
     .chat-bubble-user{background:rgba(255,109,0,.2);border:1px solid rgba(255,109,0,.3);align-self:flex-end;border-radius:.75rem .75rem 0 .75rem}
     .chat-bubble-ai{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06);align-self:flex-start;border-radius:.75rem .75rem .75rem 0}
+
+    /* ── Booking bar ── */
     #booking-bar{position:fixed;bottom:0;left:0;width:100%;z-index:50}
+
+    /* ── Toast ── */
     #toast{transition:opacity .5s ease,transform .5s ease}
+
+    /* ── Booking modal form ── */
     .form-field{width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.2);border-radius:.75rem;padding:.75rem 1rem;color:#fff;font-size:.9rem;outline:none;transition:border-color .2s}
     .form-field:focus{border-color:#FF6D00}
     .form-field::placeholder{color:rgba(255,255,255,.35)}
+
+    @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
   </style>
 </head>
 <body class="antialiased">
 
+<!-- ═══ LOADER ═══ -->
 <div id="loader">
   <div class="loader-spin"></div>
   <p class="text-sm tracking-[.2em] text-gray-400 uppercase font-semibold">Loading Paradise Inn</p>
   <div class="loader-bar"><div class="loader-bar-fill"></div></div>
 </div>
 
+<!-- ═══ WEBGL ═══ -->
 <canvas id="webgl-canvas"></canvas>
 
+<!-- ═══ NAV ═══ -->
 <nav class="fixed w-full z-50 glass transition-all duration-300" id="navbar">
   <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
     <div class="text-2xl font-display font-bold tracking-wider">
@@ -79,7 +125,7 @@
     </div>
     <div class="hidden md:flex space-x-8 text-sm font-semibold tracking-wide">
       <a href="#stay" class="hover:text-brand-amber transition-colors">STAY</a>
-      <a href="#dine" class="hover:text-brand-amber transition-colors">DINE & EVENTS</a>
+      <a href="#dine" class="hover:text-brand-amber transition-colors">DINE &amp; EVENTS</a>
       <a href="#shop" class="hover:text-brand-amber transition-colors">SHOP</a>
       <a href="#contact" class="hover:text-brand-amber transition-colors">CONTACT</a>
     </div>
@@ -87,22 +133,27 @@
   </div>
   <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 flex flex-col gap-4 text-sm font-semibold tracking-wide">
     <a href="#stay" class="hover:text-brand-amber" onclick="toggleMobileMenu()">STAY</a>
-    <a href="#dine" class="hover:text-brand-amber" onclick="toggleMobileMenu()">DINE & EVENTS</a>
+    <a href="#dine" class="hover:text-brand-amber" onclick="toggleMobileMenu()">DINE &amp; EVENTS</a>
     <a href="#shop" class="hover:text-brand-amber" onclick="toggleMobileMenu()">SHOP</a>
     <a href="#contact" class="hover:text-brand-amber" onclick="toggleMobileMenu()">CONTACT</a>
   </div>
 </nav>
 
+<!-- ═══ HERO ═══ -->
 <section class="min-h-screen flex items-center justify-center pt-24 px-6 pb-36 relative">
+  <!-- Hero background image -->
   <div class="absolute inset-0 z-0 overflow-hidden">
-    <img src="1000499617.webp" alt="Hotel Paradise Inn exterior" class="w-full h-full object-cover opacity-40" />
+    <img src="hotel_exterior.webp" alt="Hotel Paradise Inn exterior at night" class="w-full h-full object-cover opacity-40" />
     <div class="absolute inset-0 bg-gradient-to-b from-brand-charcoal/60 via-brand-charcoal/30 to-brand-charcoal/80"></div>
   </div>
   <div class="max-w-4xl w-full text-center glass p-10 md:p-16 rounded-3xl relative z-10">
     <span class="text-xs font-bold tracking-[.25em] text-brand-amber mb-4 block uppercase">Auraiya's Premier Destination</span>
     <h1 class="text-4xl md:text-6xl font-display font-bold mb-6 uppercase tracking-tight leading-tight">
-      Experience <span class="text-brand-red neon-red">Luxury</span>,<br>Dining & Shopping<br>Under One Roof.
+      Experience <span class="text-brand-red neon-red">Luxury</span>,<br>Dining &amp; Shopping<br>Under One Roof.
     </h1>
+    <p class="text-lg md:text-xl text-gray-300 mb-10 font-light max-w-2xl mx-auto">
+      Welcome to Auraiya's premier destination — Royal Paradise Hall, Paradise Inn Restaurant, and Hotel rooms, all in one iconic complex.
+    </p>
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
       <button onclick="openBookingModal()" class="w-full sm:w-auto px-8 py-4 btn-amber text-white font-bold rounded-lg">Book A Room</button>
       <button onclick="scrollToSection('#stay')" class="w-full sm:w-auto px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-brand-charcoal transition-all duration-300">Explore Complex</button>
@@ -110,79 +161,762 @@
   </div>
 </section>
 
+<!-- ═══ STAY ═══ -->
 <section id="stay" class="min-h-screen py-20 px-6 flex items-center">
   <div class="absolute inset-0 texture-headboard opacity-50 z-0"></div>
   <div class="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
     <div>
       <h2 class="text-xs font-bold tracking-[.2em] text-brand-amber mb-2 uppercase">Zone 1 · Luxury Stay</h2>
       <h3 class="text-4xl md:text-5xl font-display font-bold mb-6">Paradise<br>Accommodations</h3>
-      <p class="text-gray-300 mb-8 text-lg">Rest in meticulously designed rooms featuring ornamental wallpaper, cove-lit ceilings, and plush white bedding.</p>
+      <p class="text-gray-300 mb-8 text-lg">Rest in meticulously designed rooms featuring ornamental wallpaper, cove-lit ceilings, and plush white bedding — total tranquility above the city.</p>
+      <div class="grid grid-cols-2 gap-4 mb-8">
+        <div class="glass p-4 rounded-xl flex items-center gap-3"><i class="fa-solid fa-wifi text-brand-amber text-xl"></i><span class="font-medium text-sm">Free High-Speed Wi-Fi</span></div>
+        <div class="glass p-4 rounded-xl flex items-center gap-3"><i class="fa-solid fa-mug-hot text-brand-amber text-xl"></i><span class="font-medium text-sm">Complimentary Breakfast</span></div>
+        <div class="glass p-4 rounded-xl flex items-center gap-3"><i class="fa-solid fa-concierge-bell text-brand-amber text-xl"></i><span class="font-medium text-sm">24/7 Front Desk</span></div>
+        <div class="glass p-4 rounded-xl flex items-center gap-3"><i class="fa-solid fa-bed text-brand-amber text-xl"></i><span class="font-medium text-sm">Premium Room Service</span></div>
+      </div>
       <button onclick="openBookingModal()" class="px-8 py-3 btn-amber text-white font-bold rounded-lg">Reserve a Room</button>
     </div>
+    <!-- Real room images -->
     <div class="grid grid-cols-2 gap-5">
       <div class="zone-card rounded-2xl overflow-hidden h-64 col-span-2">
-        <img src="1000499616.webp" alt="Premium room" class="object-cover rounded-2xl w-full h-full" />
+        <img src="room_bed.webp" alt="Premium room with ornamental wallpaper and plush bedding" class="object-cover rounded-2xl w-full h-full" />
       </div>
       <div class="zone-card rounded-2xl overflow-hidden h-44">
-        <img src="1000499615.webp" alt="Room detail" class="object-cover rounded-2xl w-full h-full" />
+        <img src="room_ceiling.webp" alt="Designer false ceiling with LED cove lighting" class="object-cover rounded-2xl w-full h-full" />
       </div>
       <div class="zone-card glass rounded-2xl p-5 h-44 flex flex-col justify-center">
+        <div class="text-brand-amber text-3xl mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
         <p class="font-display font-bold text-lg">Deluxe Rooms</p>
+        <p class="text-sm text-gray-400 mt-1">Designer interiors with warm ambient lighting</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ═══ DINE ═══ -->
 <section id="dine" class="py-20 px-6">
   <div class="max-w-7xl mx-auto w-full">
     <div class="text-center mb-14">
-      <h2 class="text-xs font-bold tracking-[.2em] text-brand-amber mb-2 uppercase">Zone 2 · Culinary & Events</h2>
-      <h3 class="text-4xl md:text-5xl font-display font-bold">Restaurant &<br>Royal Paradise Hall</h3>
+      <h2 class="text-xs font-bold tracking-[.2em] text-brand-amber mb-2 uppercase">Zone 2 · Culinary &amp; Events</h2>
+      <h3 class="text-4xl md:text-5xl font-display font-bold">Restaurant &amp;<br>Royal Paradise Hall</h3>
     </div>
+
+    <!-- Restaurant + Hall cards -->
     <div class="grid lg:grid-cols-2 gap-10 mb-16">
+      <!-- Dining card -->
       <div class="zone-card border-2 neon-border-amber rounded-3xl glass relative overflow-hidden group">
         <div class="h-56 overflow-hidden">
-          <img src="1000499614.webp" alt="Restaurant interior" class="object-cover w-full h-full" />
+          <img src="restaurant_hall.webp" alt="Paradise Inn restaurant with panoramic city view" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
         </div>
+        <div class="absolute inset-0 bg-brand-amber/5 group-hover:bg-brand-amber/10 transition-colors duration-300 pointer-events-none"></div>
         <div class="p-8 relative z-10">
+          <i class="fa-solid fa-utensils text-3xl text-brand-amber mb-4"></i>
           <h4 class="text-2xl font-display font-bold mb-3">Fine Dining Experience</h4>
-        </div>
-      </div>
-      <div class="zone-card border-2 border-brand-red/30 rounded-3xl glass relative overflow-hidden group">
-        <div class="h-56 relative overflow-hidden">
-          <div class="hall-slide active absolute inset-0">
-            <img src="1000499613.webp" alt="Banquet Hall" class="object-cover rounded-2xl w-full h-full" />
+          <p class="text-gray-300 mb-5 text-sm">Panoramic city views, a hand-crafted menu spanning Indian, Chinese, and Continental cuisines — and signature chocolate shakes that guests rave about.</p>
+          <div class="flex flex-wrap gap-3">
+            <button onclick="scrollToSection('#food-gallery')" class="text-brand-amber font-semibold flex items-center gap-2 hover:text-white transition-colors py-2 text-sm">See Our Menu Gallery <i class="fa-solid fa-arrow-right"></i></button>
+            <button onclick="openModal('chef')" class="bg-brand-amber/10 border border-brand-amber/40 text-brand-amber px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:bg-brand-amber hover:text-white transition-all duration-300 text-sm">✨ AI Chef</button>
           </div>
         </div>
+      </div>
+
+      <!-- Events card with slider -->
+      <div class="zone-card border-2 border-brand-red/30 rounded-3xl glass relative overflow-hidden group">
+        <!-- Hall image slider -->
+        <div class="h-56 relative overflow-hidden">
+          <div class="hall-slide active absolute inset-0">
+            <img src="hall_sofas.webp" alt="Royal Paradise Hall with white sofa seating" class="object-cover rounded-2xl w-full h-full" />
+          </div>
+          <div class="hall-slide absolute inset-0">
+            <img src="restaurant_hall.webp" alt="Royal Paradise Hall dining setup" class="object-cover rounded-2xl w-full h-full" />
+          </div>
+          <!-- Slider dots -->
+          <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
+            <button onclick="setHallSlide(0)" class="hall-dot w-2 h-2 rounded-full bg-white/80 transition-all" id="dot-0"></button>
+            <button onclick="setHallSlide(1)" class="hall-dot w-2 h-2 rounded-full bg-white/40 transition-all" id="dot-1"></button>
+          </div>
+          <!-- Slide arrows -->
+          <button onclick="prevHallSlide()" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center hover:bg-black/80 transition-colors"><i class="fa-solid fa-chevron-left text-white text-xs"></i></button>
+          <button onclick="nextHallSlide()" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/50 rounded-full flex items-center justify-center hover:bg-black/80 transition-colors"><i class="fa-solid fa-chevron-right text-white text-xs"></i></button>
+        </div>
+        <div class="absolute inset-0 bg-brand-red/5 group-hover:bg-brand-red/10 transition-colors duration-300 pointer-events-none"></div>
         <div class="p-8 relative z-10">
+          <i class="fa-solid fa-champagne-glasses text-3xl text-brand-red mb-4"></i>
           <h4 class="text-2xl font-display font-bold mb-3">Royal Paradise Hall</h4>
+          <p class="text-gray-300 mb-5 text-sm">Marble floors, warm-lit columns, and a grand stage — ideal for weddings, receptions, and corporate celebrations. Seats 200+ guests.</p>
+          <div class="flex flex-wrap gap-3">
+            <button onclick="scrollToSection('#contact')" class="text-brand-red font-semibold flex items-center gap-2 hover:text-white transition-colors py-2 text-sm">Book Event Space <i class="fa-solid fa-arrow-right"></i></button>
+            <button onclick="openModal('event')" class="bg-brand-red/10 border border-brand-red/40 text-brand-red px-4 py-2 rounded-lg font-semibold flex items-center gap-2 hover:bg-brand-red hover:text-white transition-all duration-300 text-sm">✨ AI Event Planner</button>
+          </div>
         </div>
       </div>
     </div>
+
+    <!-- Food Gallery -->
     <div id="food-gallery">
-      <h3 class="text-2xl font-display font-bold mb-8 text-center">Menu Highlights</h3>
+      <h3 class="text-2xl font-display font-bold mb-8 text-center">Menu Highlights <span class="text-brand-amber">— From Our Kitchen</span></h3>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <div class="food-card zone-card rounded-2xl overflow-hidden relative group"><img src="1000499577.webp" alt="Food 1" class="object-cover w-full h-52" /></div>
-        <div class="food-card zone-card rounded-2xl overflow-hidden relative group"><img src="1000499576.webp" alt="Food 2" class="object-cover w-full h-52" /></div>
-        <div class="food-card zone-card rounded-2xl overflow-hidden relative group"><img src="1000499575.webp" alt="Food 3" class="object-cover w-full h-52" /></div>
-        <div class="food-card zone-card rounded-2xl overflow-hidden relative group"><img src="1000499574.webp" alt="Food 4" class="object-cover w-full h-52" /></div>
-        <div class="food-card zone-card rounded-2xl overflow-hidden relative group"><img src="1000499611.webp" alt="Food 5" class="object-cover w-full h-52" /></div>
+
+        <div class="food-card zone-card rounded-2xl overflow-hidden relative group col-span-1">
+          <div class="h-52 overflow-hidden">
+            <img src="food_spring_rolls.webp" alt="Crispy Spring Rolls starter" class="object-cover rounded-2xl w-full h-full" />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl"></div>
+          <div class="absolute bottom-3 left-3 right-3">
+            <p class="text-xs text-brand-amber font-bold uppercase tracking-wide">Starter</p>
+            <p class="text-sm font-semibold text-white">Crispy Spring Rolls</p>
+          </div>
+        </div>
+
+        <div class="food-card zone-card rounded-2xl overflow-hidden relative group col-span-1">
+          <div class="h-52 overflow-hidden">
+            <img src="food_kebab_tea.webp" alt="Hara Bhara Kebab with chai" class="object-cover rounded-2xl w-full h-full" />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl"></div>
+          <div class="absolute bottom-3 left-3 right-3">
+            <p class="text-xs text-brand-amber font-bold uppercase tracking-wide">Starter</p>
+            <p class="text-sm font-semibold text-white">Hara Bhara Kebab &amp; Chai</p>
+          </div>
+        </div>
+
+        <div class="food-card zone-card rounded-2xl overflow-hidden relative group col-span-1">
+          <div class="h-52 overflow-hidden">
+            <img src="food_dosa.webp" alt="Crispy South Indian Masala Dosa" class="object-cover rounded-2xl w-full h-full" />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl"></div>
+          <div class="absolute bottom-3 left-3 right-3">
+            <p class="text-xs text-brand-amber font-bold uppercase tracking-wide">Main Course</p>
+            <p class="text-sm font-semibold text-white">Masala Dosa</p>
+          </div>
+        </div>
+
+        <div class="food-card zone-card rounded-2xl overflow-hidden relative group col-span-1">
+          <div class="h-52 overflow-hidden">
+            <img src="food_paneer_curry.webp" alt="Paneer Special Curry in kadhai" class="object-cover rounded-2xl w-full h-full" />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl"></div>
+          <div class="absolute bottom-3 left-3 right-3">
+            <p class="text-xs text-brand-amber font-bold uppercase tracking-wide">Main Course</p>
+            <p class="text-sm font-semibold text-white">Paneer Special Curry</p>
+          </div>
+        </div>
+
+        <div class="food-card zone-card rounded-2xl overflow-hidden relative group col-span-1">
+          <div class="h-52 overflow-hidden">
+            <img src="food_milkshake_day.webp" alt="Signature Chocolate Milkshake" class="object-cover rounded-2xl w-full h-full" />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent rounded-2xl"></div>
+          <div class="absolute bottom-3 left-3 right-3">
+            <p class="text-xs text-brand-amber font-bold uppercase tracking-wide">Beverage</p>
+            <p class="text-sm font-semibold text-white">Chocolate Milkshake</p>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
 </section>
 
-<footer id="contact" class="bg-black/80 py-16 border-t border-white/10 backdrop-blur-md pb-36">
+<!-- ═══ SHOP ═══ -->
+<section id="shop" class="py-24 px-6 bg-brand-charcoal border-y border-white/10 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-5" style="background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 1px,transparent 50px)"></div>
+  <div class="max-w-7xl mx-auto w-full relative z-10 grid md:grid-cols-2 gap-12 items-center">
+    <div class="flex justify-center gap-6">
+      <div class="w-28 h-72 bg-white/5 backdrop-blur-md border border-white/15 rounded-t-full rounded-b-lg flex items-center justify-center">
+        <i class="fa-solid fa-shirt text-4xl text-white/40"></i>
+      </div>
+      <div class="w-28 bg-brand-red/15 backdrop-blur-md border border-brand-red/25 rounded-t-full rounded-b-lg flex items-center justify-center mt-10" style="height:22rem">
+        <i class="fa-solid fa-bag-shopping text-4xl text-brand-red/70"></i>
+      </div>
+    </div>
+    <div>
+      <h2 class="text-xs font-bold tracking-[.2em] text-brand-amber mb-2 uppercase">Zone 3 · Ground Level</h2>
+      <h3 class="text-4xl md:text-5xl font-display font-bold mb-6">Smart Point</h3>
+      <p class="text-gray-300 text-lg mb-4">Step out of the hotel and directly into retail. Our ground floor Smart Point offers daily needs, apparel, and essentials.</p>
+      <p class="text-sm text-gray-400 border-l-2 border-brand-amber pl-4 mb-6">Shop without ever leaving the complex premises — convenience built into the architecture.</p>
+      <button onclick="openModal('shopper')" class="px-6 py-3 glass border border-white/30 text-white font-semibold flex items-center gap-2 hover:bg-white hover:text-brand-charcoal transition-all duration-300 rounded-lg">
+        ✨ AI Personal Shopper
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AMENITIES ═══ -->
+<section class="py-20 px-6">
+  <div class="max-w-7xl mx-auto w-full">
+    <h3 class="text-3xl font-display font-bold mb-12 text-center">Amenities &amp; Policies</h3>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="glass p-6 rounded-2xl">
+        <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Popular</h4>
+        <ul class="space-y-3 text-gray-300 text-sm">
+          <li><i class="fa-solid fa-check text-green-400 mr-2"></i>Free Breakfast</li>
+          <li><i class="fa-solid fa-check text-green-400 mr-2"></i>Free Wi-Fi</li>
+          <li><i class="fa-solid fa-check text-green-400 mr-2"></i>Dedicated Parking</li>
+          <li><i class="fa-solid fa-check text-green-400 mr-2"></i>In-house Restaurant</li>
+        </ul>
+      </div>
+      <div class="glass p-6 rounded-2xl">
+        <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Food &amp; Drink</h4>
+        <ul class="space-y-3 text-gray-300 text-sm">
+          <li><i class="fa-solid fa-bell-concierge text-gray-400 mr-2"></i>Room Service</li>
+          <li><i class="fa-solid fa-utensils text-gray-400 mr-2"></i>Full Menu Access</li>
+        </ul>
+      </div>
+      <div class="glass p-6 rounded-2xl">
+        <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Services</h4>
+        <ul class="space-y-3 text-gray-300 text-sm">
+          <li><i class="fa-solid fa-clock text-gray-400 mr-2"></i>24-Hr Front Desk</li>
+          <li><i class="fa-solid fa-shirt text-gray-400 mr-2"></i>Laundry Service</li>
+          <li><i class="fa-solid fa-van-shuttle text-gray-400 mr-2"></i>Local Shuttle</li>
+        </ul>
+      </div>
+      <div class="glass p-6 rounded-2xl">
+        <h4 class="font-bold text-lg mb-4 text-brand-amber border-b border-white/10 pb-2">Payments</h4>
+        <div class="flex flex-wrap gap-4 mt-4">
+          <i class="fa-brands fa-cc-visa text-3xl text-gray-300"></i>
+          <i class="fa-brands fa-cc-mastercard text-3xl text-gray-300"></i>
+          <i class="fa-brands fa-google-pay text-3xl text-gray-300"></i>
+          <i class="fa-solid fa-money-bill-wave text-3xl text-gray-300" title="Cash"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer id="contact" class="bg-black/80 py-16 border-t border-white/10 backdrop-blur-md pb-36 md:pb-24">
   <div class="container mx-auto px-6 max-w-4xl text-center">
-    <p class="text-gray-500 text-sm">© 2026 Hotel Paradise Inn, Auraiya.</p>
+    <div class="text-3xl font-display font-bold mb-4"><span class="text-brand-red">PARADISE</span> <span class="text-white">INN</span></div>
+    <h2 class="text-2xl md:text-3xl font-display font-bold mb-4 text-white">Visit Us In Auraiya</h2>
+    <p class="text-gray-300 text-base mb-8 leading-relaxed">Local Main Rd Etawah, Etawah Kanpur Hwy,<br>in front of Punjab National Bank,<br>Hashmat Nagar, Auraiya, Uttar Pradesh 206122</p>
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8">
+      <a href="https://www.google.com/maps/place/FG77%2BH42+HOTEL+PARADISE+INN" target="_blank" rel="noopener noreferrer"
+         class="btn-amber text-white px-8 py-3 rounded-xl font-bold flex items-center gap-2">
+        <i class="fa-solid fa-map-location-dot"></i> View on Google Maps
+      </a>
+      <a href="tel:+91" class="bg-white/10 border border-white/20 text-white px-8 py-3 rounded-xl font-bold hover:bg-white/20 transition-colors flex items-center gap-2">
+        <i class="fa-solid fa-phone"></i> Call Us
+      </a>
+    </div>
+    <p class="text-gray-500 text-sm">© 2026 Hotel Paradise Inn, Auraiya. All rights reserved.</p>
   </div>
 </footer>
 
+<!-- ═══ BOOKING BAR ═══ -->
+<div id="booking-bar" class="glass-light shadow-2xl">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="flex items-center gap-6 w-full md:w-auto">
+      <div class="flex-1 md:w-52">
+        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Check-in Date</label>
+        <input type="date" id="bar-checkin" class="w-full bg-transparent border-b border-gray-300 py-1 text-gray-900 focus:outline-none focus:border-brand-amber font-medium" />
+      </div>
+      <div class="flex-1 md:w-36">
+        <label class="block text-xs font-bold text-gray-500 uppercase tracking-wide mb-1">Guests</label>
+        <select id="bar-guests" class="w-full bg-transparent border-b border-gray-300 py-1 text-gray-900 focus:outline-none focus:border-brand-amber font-medium cursor-pointer">
+          <option>1 Guest</option><option selected>2 Guests</option><option>3 Guests</option><option>4+ Guests</option>
+        </select>
+      </div>
+    </div>
+    <div class="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
+      <div class="hidden lg:flex gap-2 text-gray-400">
+        <i class="fa-brands fa-cc-visa text-xl"></i>
+        <i class="fa-brands fa-cc-mastercard text-xl"></i>
+        <i class="fa-solid fa-mobile-screen-button text-xl"></i>
+      </div>
+      <button onclick="openBookingModal()" class="w-full md:w-auto btn-amber text-white font-bold py-3 px-8 rounded-lg">Reserve Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CONCIERGE BUTTON ═══ -->
+<button onclick="toggleConcierge()" class="fixed bottom-24 right-6 w-14 h-14 btn-red text-white rounded-full flex items-center justify-center text-2xl hover:scale-110 transition-transform z-[60] shadow-[0_0_24px_rgba(211,47,47,.6)]" title="AI Concierge">✨</button>
+
+<!-- ═══ CONCIERGE CHAT ═══ -->
+<div id="concierge-modal" class="glass border border-brand-red/30 shadow-2xl">
+  <div class="bg-brand-red p-4 flex justify-between items-center text-white flex-shrink-0">
+    <h3 class="font-display font-bold flex items-center gap-2">✨ AI Concierge</h3>
+    <button onclick="toggleConcierge()" class="hover:text-gray-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+  </div>
+  <div id="chat-history" class="flex-1 p-4 overflow-y-auto flex flex-col gap-3 inner-scroll">
+    <div class="chat-bubble-ai p-3 text-sm text-gray-200 max-w-[90%]">
+      Welcome to Hotel Paradise Inn! I'm your AI Concierge.<br><br>
+      <button onclick="sendPredefined('What amenities does the hotel offer?')" class="text-brand-amber underline text-xs block mt-1 text-left">What amenities do you offer?</button>
+      <button onclick="sendPredefined('Suggest a 1-day itinerary around Auraiya.')" class="text-brand-amber underline text-xs block mt-1 text-left">Suggest an Auraiya itinerary.</button>
+    </div>
+  </div>
+  <div class="p-3 border-t border-white/10 bg-black/20 flex items-center gap-2 flex-shrink-0">
+    <input id="chat-input" type="text" placeholder="Ask about your stay…" class="flex-1 bg-transparent text-white border border-white/20 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-brand-amber" />
+    <button onclick="sendChatMessage()" class="w-10 h-10 bg-brand-amber rounded-full text-white flex items-center justify-center hover:bg-orange-600 transition-colors"><i class="fa-solid fa-paper-plane"></i></button>
+  </div>
+</div>
+
+<!-- ═══ BOOKING MODAL (EmailJS) ═══ -->
+<div id="booking-modal" class="modal-wrap">
+  <div class="glass border border-brand-amber/40 rounded-2xl w-full max-w-md p-7 relative">
+    <button onclick="closeBookingModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+    <div class="text-center mb-6">
+      <div class="w-14 h-14 bg-brand-amber/20 rounded-full flex items-center justify-center mx-auto mb-3 border border-brand-amber/40"><i class="fa-solid fa-bed text-brand-amber text-2xl"></i></div>
+      <h3 class="text-2xl font-display font-bold text-brand-amber">Reserve Your Room</h3>
+      <p class="text-sm text-gray-300 mt-1">Fill in your details — we'll confirm within hours.</p>
+    </div>
+    <div id="booking-form-area" class="flex flex-col gap-4">
+      <div>
+        <label class="block text-xs text-gray-400 mb-1 uppercase tracking-wide">Full Name *</label>
+        <input id="b-name" type="text" placeholder="e.g. Rahul Sharma" class="form-field" />
+      </div>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1 uppercase tracking-wide">Phone Number *</label>
+        <input id="b-phone" type="tel" placeholder="+91 98765 43210" class="form-field" />
+      </div>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1 uppercase tracking-wide">Check-in Date *</label>
+        <input id="b-date" type="date" class="form-field" />
+      </div>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1 uppercase tracking-wide">Number of Guests *</label>
+        <select id="b-guests" class="form-field">
+          <option value="1">1 Guest</option>
+          <option value="2" selected>2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4+">4+ Guests</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs text-gray-400 mb-1 uppercase tracking-wide">Special Requests (optional)</label>
+        <textarea id="b-notes" rows="2" placeholder="Early check-in, ground floor, etc." class="form-field resize-none"></textarea>
+      </div>
+      <button onclick="handleBookingSubmit()" class="w-full btn-amber text-white font-bold py-3 rounded-xl flex justify-center items-center gap-2 mt-1">
+        <i class="fa-solid fa-paper-plane"></i> Send Reservation Request
+      </button>
+      <p class="text-xs text-gray-500 text-center">Your details are only used to process your booking.</p>
+    </div>
+    <div id="booking-loading" class="hidden py-8 flex-col items-center justify-center text-brand-amber flex">
+      <div class="loader-spin mb-4"></div><p class="font-medium animate-pulse">Sending your request…</p>
+    </div>
+    <div id="booking-success" class="hidden py-6 text-center flex-col items-center">
+      <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mb-4 border border-green-500/40">
+        <i class="fa-solid fa-circle-check text-green-400 text-3xl"></i>
+      </div>
+      <h4 class="text-xl font-display font-bold text-white mb-2">Reservation Sent!</h4>
+      <p class="text-gray-300 text-sm">Thank you! Our team will call you within a few hours to confirm your booking.</p>
+      <button onclick="closeBookingModal()" class="mt-5 px-6 py-2 btn-amber text-white font-semibold rounded-lg text-sm">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CHEF MODAL ═══ -->
+<div id="chef-modal" class="modal-wrap">
+  <div class="glass border border-brand-amber/40 rounded-2xl w-full max-w-lg p-6 relative max-h-[90vh] overflow-y-auto inner-scroll">
+    <button onclick="closeModal('chef')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-brand-amber/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand-amber/50"><span class="text-3xl">👨‍🍳</span></div>
+      <h3 class="text-2xl font-display font-bold text-brand-amber">✨ AI Chef</h3>
+      <p class="text-sm text-gray-300 mt-2">Tell me your craving — I'll design a custom 3-course menu.</p>
+    </div>
+    <div id="chef-input-area" class="flex flex-col gap-4">
+      <textarea id="craving-input" rows="3" placeholder="e.g., Something spicy and vegetarian with paneer…" class="form-field resize-none"></textarea>
+      <button onclick="generateAIContent('chef')" class="w-full bg-brand-amber text-white font-bold py-3 rounded-xl hover:bg-orange-600 transition-colors flex justify-center items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles"></i> Create My Menu</button>
+    </div>
+    <div id="chef-loading" class="hidden py-8 flex-col items-center justify-center text-brand-amber flex">
+      <div class="loader-spin mb-4"></div><p class="font-medium animate-pulse">Cooking up your menu…</p>
+    </div>
+    <div id="chef-result" class="hidden mt-4">
+      <div id="chef-result-content" class="text-sm text-gray-200 p-4 bg-black/30 rounded-xl border border-white/10 inner-scroll max-h-64 overflow-y-auto"></div>
+      <button onclick="resetModal('chef')" class="w-full mt-4 border border-white/30 text-white font-semibold py-2 rounded-xl hover:bg-white/10 transition-colors">Try Another Craving</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EVENT MODAL ═══ -->
+<div id="event-modal" class="modal-wrap">
+  <div class="glass border border-brand-red/40 rounded-2xl w-full max-w-lg p-6 relative max-h-[90vh] overflow-y-auto inner-scroll">
+    <button onclick="closeModal('event')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-brand-red/20 rounded-full flex items-center justify-center mx-auto mb-4 border border-brand-red/50"><span class="text-3xl">🎉</span></div>
+      <h3 class="text-2xl font-display font-bold text-brand-red">✨ AI Event Planner</h3>
+      <p class="text-sm text-gray-300 mt-2">Tell me what you're celebrating — I'll plan it for Royal Paradise Hall.</p>
+    </div>
+    <div id="event-input-area" class="flex flex-col gap-4">
+      <textarea id="event-input" rows="3" placeholder="e.g., 50th anniversary party, 100 guests, traditional theme…" class="form-field resize-none"></textarea>
+      <button onclick="generateAIContent('event')" class="w-full btn-red text-white font-bold py-3 rounded-xl flex justify-center items-center gap-2 transition-all"><i class="fa-solid fa-wand-magic-sparkles"></i> Draft My Event</button>
+    </div>
+    <div id="event-loading" class="hidden py-8 flex-col items-center justify-center text-brand-red flex">
+      <div class="loader-spin mb-4" style="border-top-color:#D32F2F;border-color:rgba(211,47,47,.2)"></div>
+      <p class="font-medium animate-pulse">Designing your event…</p>
+    </div>
+    <div id="event-result" class="hidden mt-4">
+      <div id="event-result-content" class="text-sm text-gray-200 p-4 bg-black/30 rounded-xl border border-white/10 inner-scroll max-h-64 overflow-y-auto"></div>
+      <button onclick="resetModal('event')" class="w-full mt-4 border border-white/30 text-white font-semibold py-2 rounded-xl hover:bg-white/10 transition-colors">Plan Another Event</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SHOPPER MODAL ═══ -->
+<div id="shopper-modal" class="modal-wrap">
+  <div class="glass border border-white/30 rounded-2xl w-full max-w-lg p-6 relative max-h-[90vh] overflow-y-auto inner-scroll">
+    <button onclick="closeModal('shopper')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-2xl"></i></button>
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/25"><span class="text-3xl">🛍️</span></div>
+      <h3 class="text-2xl font-display font-bold text-white">✨ AI Personal Shopper</h3>
+      <p class="text-sm text-gray-300 mt-2">What are you looking for at Smart Point?</p>
+    </div>
+    <div id="shopper-input-area" class="flex flex-col gap-4">
+      <textarea id="shopper-input" rows="3" placeholder="e.g., Smart-casual outfit for a dinner date…" class="form-field resize-none"></textarea>
+      <button onclick="generateAIContent('shopper')" class="w-full bg-white text-brand-charcoal font-bold py-3 rounded-xl hover:bg-gray-200 transition-colors flex justify-center items-center gap-2"><i class="fa-solid fa-wand-magic-sparkles"></i> Get Shopping List</button>
+    </div>
+    <div id="shopper-loading" class="hidden py-8 flex-col items-center justify-center text-white flex">
+      <div class="loader-spin mb-4" style="border-top-color:#fff;border-color:rgba(255,255,255,.15)"></div>
+      <p class="font-medium animate-pulse">Curating your style…</p>
+    </div>
+    <div id="shopper-result" class="hidden mt-4">
+      <div id="shopper-result-content" class="text-sm text-gray-200 p-4 bg-black/30 rounded-xl border border-white/10 inner-scroll max-h-64 overflow-y-auto"></div>
+      <button onclick="resetModal('shopper')" class="w-full mt-4 border border-white/30 text-white font-semibold py-2 rounded-xl hover:bg-white/10 transition-colors">Find Something Else</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div id="toast" class="fixed top-24 right-6 z-[80] glass border border-brand-amber/40 text-white px-6 py-4 rounded-2xl shadow-2xl flex items-center gap-3 opacity-0 pointer-events-none" style="transform:translateY(-20px)">
+  <i class="fa-solid fa-circle-check text-green-400 text-xl"></i>
+  <div><p class="font-bold text-sm" id="toast-title">Done!</p><p class="text-xs text-gray-300" id="toast-msg"></p></div>
+</div>
+
+<!-- ═══ SCRIPTS ═══ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
 <script>
-// ... (Insert original logic from your provided script tag here)
+"use strict";
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Loader ─────────────────────────────────────
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1900);
+});
+
+// ── Navbar ─────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('bg-brand-charcoal/90', window.scrollY > 50);
+});
+
+function toggleMobileMenu() {
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+}
+
+function scrollToSection(sel) {
+  document.querySelector(sel)?.scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Toast ──────────────────────────────────────
+function showToast(title, msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-title').textContent = title;
+  document.getElementById('toast-msg').textContent = msg;
+  t.style.opacity = '1'; t.style.transform = 'translateY(0)'; t.style.pointerEvents = 'auto';
+  setTimeout(() => { t.style.opacity = '0'; t.style.transform = 'translateY(-20px)'; t.style.pointerEvents = 'none'; }, 4500);
+}
+
+// ── Hall slider ────────────────────────────────
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hall-slide');
+const dots = document.querySelectorAll('.hall-dot');
+
+function setHallSlide(n) {
+  slides[currentSlide].classList.remove('active');
+  dots[currentSlide].classList.replace('bg-white/80', 'bg-white/40');
+  currentSlide = n;
+  slides[currentSlide].classList.add('active');
+  dots[currentSlide].classList.replace('bg-white/40', 'bg-white/80');
+}
+function nextHallSlide() { setHallSlide((currentSlide + 1) % slides.length); }
+function prevHallSlide() { setHallSlide((currentSlide - 1 + slides.length) % slides.length); }
+setInterval(nextHallSlide, 4000);
+
+// ── THREE.JS ───────────────────────────────────
+const canvas3d = document.getElementById('webgl-canvas');
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x212121, 0.018);
+
+const camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 0, 20);
+
+const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+const sun = new THREE.DirectionalLight(0xffffff, 0.8);
+sun.position.set(10, 20, 10); scene.add(sun);
+
+const redLight = new THREE.PointLight(0xD32F2F, 2.5, 60);
+redLight.position.set(-6, 6, 6); scene.add(redLight);
+const amberLight = new THREE.PointLight(0xFF6D00, 2.5, 60);
+amberLight.position.set(6, -5, 6); scene.add(amberLight);
+
+const building = new THREE.Group();
+scene.add(building);
+
+const mat = (c, r=.25, m=.75) => new THREE.MeshStandardMaterial({ color:c, roughness:r, metalness:m });
+const glassMat3 = new THREE.MeshStandardMaterial({ color:0x88ccff, transparent:true, opacity:.28, roughness:.08, metalness:.95 });
+const redMat3 = mat(0xD32F2F, .3, .6);
+redMat3.emissive = new THREE.Color(0x440000);
+const darkMat3 = mat(0x2e2e2e);
+const midMat3 = mat(0x3a3a3a);
+
+const gf = new THREE.Mesh(new THREE.BoxGeometry(18,4,9), glassMat3);
+gf.position.y = -8; building.add(gf);
+const ml = new THREE.Mesh(new THREE.BoxGeometry(20,3,10), darkMat3);
+ml.position.y = -4; building.add(ml);
+const mlTrim = new THREE.Mesh(new THREE.BoxGeometry(20.4,.6,10.4), redMat3);
+mlTrim.position.y = -2.7; building.add(mlTrim);
+const ul = new THREE.Mesh(new THREE.BoxGeometry(17,5,9), midMat3);
+ul.position.y = 0.5; building.add(ul);
+const ulGlass = new THREE.Mesh(new THREE.BoxGeometry(15,3.5,9.2), glassMat3);
+ulGlass.position.y = 0.5; building.add(ulGlass);
+const roof = new THREE.Mesh(new THREE.BoxGeometry(17.6,1,9.6), redMat3);
+roof.position.y = 3.2; building.add(roof);
+const spire = new THREE.Mesh(new THREE.ConeGeometry(.4, 4, 8), redMat3);
+spire.position.y = 6; building.add(spire);
+
+const winGeo = new THREE.BoxGeometry(.8,.8,.1);
+const winMat = new THREE.MeshStandardMaterial({ color:0xfff5cc, emissive:0xfff5cc, emissiveIntensity:.6 });
+for (let row=0; row<3; row++) {
+  for (let col=-3; col<=3; col++) {
+    const w = new THREE.Mesh(winGeo, winMat);
+    w.position.set(col*2.2, row*1.5-1.5, 4.6);
+    building.add(w);
+  }
+}
+
+// GSAP scroll camera
+gsap.to(camera.position, { y:6, z:13, ease:"none", scrollTrigger:{ trigger:"#stay", start:"top bottom", end:"center center", scrub:1.5 }});
+gsap.to(building.rotation, { y:.5, x:-.1, ease:"none", scrollTrigger:{ trigger:"#stay", start:"top bottom", end:"center center", scrub:1.5 }});
+gsap.to(camera.position, { y:-1, z:15, ease:"none", scrollTrigger:{ trigger:"#dine", start:"top bottom", end:"center center", scrub:1.5 }});
+gsap.to(building.rotation, { y:-.5, x:0, ease:"none", scrollTrigger:{ trigger:"#dine", start:"top bottom", end:"center center", scrub:1.5 }});
+gsap.to(camera.position, { y:-7, z:13, ease:"none", scrollTrigger:{ trigger:"#shop", start:"top bottom", end:"center center", scrub:1.5 }});
+gsap.to(building.rotation, { y:.2, x:.1, ease:"none", scrollTrigger:{ trigger:"#shop", start:"top bottom", end:"center center", scrub:1.5 }});
+
+// Section reveals
+gsap.utils.toArray('section').forEach(s => {
+  gsap.from(s.querySelectorAll('h2,h3,p,button,.zone-card,.glass'), {
+    opacity:0, y:40, stagger:.08, duration:.8, ease:'power2.out',
+    scrollTrigger:{ trigger:s, start:'top 80%', once:true }
+  });
+});
+
+// Mouse parallax — only inside RAF, no CSS conflict
+let mX=0, mY=0, tRX=0, tRY=0;
+window.addEventListener('mousemove', e => {
+  mX = (e.clientX/window.innerWidth)*2-1;
+  mY = -(e.clientY/window.innerHeight)*2+1;
+});
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+const clock = new THREE.Clock();
+(function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+  building.position.y = Math.sin(t*.5)*.4;
+  tRY += (mX*.12 - tRY)*.04;
+  tRX += (-mY*.08 - tRX)*.04;
+  building.rotation.y += (tRY - building.rotation.y)*.04;
+  building.rotation.x += (tRX - building.rotation.x)*.04;
+  redLight.intensity  = 2.5 + Math.sin(t*2)*1;
+  amberLight.intensity = 2.5 + Math.cos(t*1.5)*1;
+  renderer.render(scene, camera);
+})();
+
+// ── Google Gemini API ──────────────────────────
+// Replace with your actual Gemini API key
+const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE';
+const GEMINI_ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+async function callAI(userPrompt, systemInstruction) {
+  const payload = {
+    system_instruction: { parts: [{ text: systemInstruction }] },
+    contents: [{ role: 'user', parts: [{ text: userPrompt }] }]
+  };
+  const res = await fetch(GEMINI_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `API error ${res.status}`);
+  }
+  const data = await res.json();
+  return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response generated.';
+}
+
+function md(text) {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white">$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/\n/g, '<br>');
+}
+
+// ── Concierge chat ─────────────────────────────
+const conciergeHistory = [];
+let conciergeOpen = false;
+
+function toggleConcierge() {
+  conciergeOpen = !conciergeOpen;
+  document.getElementById('concierge-modal').classList.toggle('open', conciergeOpen);
+}
+
+function appendBubble(text, isUser) {
+  const div = document.createElement('div');
+  div.className = `p-3 text-sm max-w-[90%] ${isUser ? 'chat-bubble-user text-white' : 'chat-bubble-ai text-gray-200'}`;
+  div.innerHTML = md(text);
+  const h = document.getElementById('chat-history');
+  h.appendChild(div); h.scrollTop = 9999;
+}
+
+function appendTyping() {
+  const id = 'typing-' + Date.now();
+  const div = document.createElement('div');
+  div.id = id;
+  div.className = 'chat-bubble-ai p-3 flex gap-1 items-center w-16';
+  div.innerHTML = `<div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div><div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay:.1s"></div><div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay:.2s"></div>`;
+  const h = document.getElementById('chat-history');
+  h.appendChild(div); h.scrollTop = 9999;
+  return id;
+}
+
+function sendPredefined(text) { document.getElementById('chat-input').value = text; sendChatMessage(); }
+
+async function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim(); if (!text) return;
+  input.value = '';
+  appendBubble(text, true);
+  conciergeHistory.push({ role:'user', parts:[{ text }] });
+  const tid = appendTyping();
+  const sys = `You are the AI Concierge for Hotel Paradise Inn in Auraiya, Uttar Pradesh. Be warm, concise, and helpful. Hotel has 3 zones: Ground floor = Smart Point (shopping/essentials), Mid-level = Royal Paradise Hall (banquets/events, seats 200+), Upper floors = Paradise Inn Hotel & Restaurant (panoramic city view). Amenities: Free Wi-Fi, Free Breakfast, 24/7 Front Desk, Room Service, Laundry, Local Shuttle. Payments: Visa, Mastercard, Google Pay, Cash. For local sightseeing, suggest Auraiya Fort, nearby Ganges ghats, and local cuisine spots.`;
+  try {
+    const reply = await callAI(conciergeHistory.map(m => m.parts[0].text).join('\n'), sys);
+    document.getElementById(tid)?.remove();
+    appendBubble(reply, false);
+    conciergeHistory.push({ role:'model', parts:[{ text: reply }] });
+  } catch(e) {
+    document.getElementById(tid)?.remove();
+    appendBubble("I'm having a bit of trouble connecting right now. Please try again in a moment!", false);
+  }
+}
+document.getElementById('chat-input').addEventListener('keypress', e => { if(e.key==='Enter') sendChatMessage(); });
+
+// ── Booking Modal (EmailJS) ────────────────────
+// Replace these with your actual EmailJS credentials
+const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
+
+function openBookingModal() {
+  // Pre-fill from bar if filled
+  const barDate = document.getElementById('bar-checkin').value;
+  const barGuests = document.getElementById('bar-guests').value;
+  if (barDate) document.getElementById('b-date').value = barDate;
+  if (barGuests) document.getElementById('b-guests').value = barGuests.replace(' Guest','').replace('s','');
+  document.getElementById('booking-modal').classList.add('open');
+}
+
+function closeBookingModal() {
+  document.getElementById('booking-modal').classList.remove('open');
+  // reset
+  document.getElementById('booking-form-area').classList.remove('hidden');
+  document.getElementById('booking-loading').classList.add('hidden');
+  document.getElementById('booking-success').classList.add('hidden');
+  ['b-name','b-phone','b-notes'].forEach(id => document.getElementById(id).value = '');
+}
+
+async function handleBookingSubmit() {
+  const name   = document.getElementById('b-name').value.trim();
+  const phone  = document.getElementById('b-phone').value.trim();
+  const date   = document.getElementById('b-date').value;
+  const guests = document.getElementById('b-guests').value;
+  const notes  = document.getElementById('b-notes').value.trim();
+
+  if (!name || !phone || !date) {
+    showToast('Missing details', 'Please fill in Name, Phone, and Check-in Date.');
+    return;
+  }
+
+  document.getElementById('booking-form-area').classList.add('hidden');
+  document.getElementById('booking-loading').classList.remove('hidden');
+
+  try {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      guest_name:    name,
+      guest_phone:   phone,
+      checkin_date:  date,
+      guest_count:   guests,
+      special_notes: notes || 'None',
+      hotel_name:    'Hotel Paradise Inn, Auraiya'
+    });
+    document.getElementById('booking-loading').classList.add('hidden');
+    document.getElementById('booking-success').classList.remove('hidden');
+  } catch(err) {
+    document.getElementById('booking-loading').classList.add('hidden');
+    document.getElementById('booking-form-area').classList.remove('hidden');
+    showToast('Sending failed', 'Could not send your request. Please call us directly.');
+    console.error('EmailJS error:', err);
+  }
+}
+
+// ── AI Feature Modals ──────────────────────────
+const AI_CONFIGS = {
+  chef: {
+    inputId: 'craving-input',
+    system: 'You are the Executive Chef at Paradise Inn Restaurant in Auraiya. Based on the guest\'s craving, create a luxurious 3-course menu (Starter, Main Course, Dessert). Write mouth-watering, elegant descriptions. Use emojis. Format each course with bold headings.',
+    prompt: 'Design a 3-course menu for a guest who craves:'
+  },
+  event: {
+    inputId: 'event-input',
+    system: 'You are the Master Event Planner for Royal Paradise Hall in Auraiya (seats 200+, marble floors, grand stage). Based on the event described, provide: 1) A short event concept, 2) Three decoration ideas, 3) A suggested timeline. Use emojis and clear section headings.',
+    prompt: 'Plan an event at Royal Paradise Hall:'
+  },
+  shopper: {
+    inputId: 'shopper-input',
+    system: 'You are an enthusiastic AI Personal Shopper for Smart Point retail store. Suggest 3-4 practical outfit combinations or item picks. Give brief fashion tips. Use emojis and bold headings.',
+    prompt: 'Create a shopping guide for a guest who needs:'
+  }
+};
+
+function openModal(name) { document.getElementById(name+'-modal').classList.add('open'); }
+function closeModal(name) { document.getElementById(name+'-modal').classList.remove('open'); resetModal(name); }
+function resetModal(name) {
+  document.getElementById(name+'-input-area').classList.remove('hidden');
+  document.getElementById(name+'-loading').classList.add('hidden');
+  document.getElementById(name+'-result').classList.add('hidden');
+  document.getElementById(AI_CONFIGS[name].inputId).value = '';
+}
+
+async function generateAIContent(name) {
+  const cfg = AI_CONFIGS[name];
+  const val = document.getElementById(cfg.inputId).value.trim();
+  if (!val) return;
+  document.getElementById(name+'-input-area').classList.add('hidden');
+  document.getElementById(name+'-loading').classList.remove('hidden');
+  try {
+    const reply = await callAI(`${cfg.prompt} ${val}`, cfg.system);
+    document.getElementById(name+'-loading').classList.add('hidden');
+    document.getElementById(name+'-result-content').innerHTML = md(reply);
+    document.getElementById(name+'-result').classList.remove('hidden');
+  } catch(e) {
+    document.getElementById(name+'-loading').classList.add('hidden');
+    document.getElementById(name+'-input-area').classList.remove('hidden');
+    showToast('AI unavailable', 'Could not reach the AI service. Please try again.');
+  }
+}
 </script>
 </body>
 </html>
