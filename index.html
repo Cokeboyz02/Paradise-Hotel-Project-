@@ -710,9 +710,8 @@ const clock = new THREE.Clock();
 // Futuristic Floating Background Animation
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.getElementById('canvas-container').appendChild(renderer.domElement);
+const canvas = document.getElementById('webgl-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
 
 // Create Floating Particles
 const geometry = new THREE.BufferGeometry();
