@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -706,18 +707,50 @@ window.addEventListener('resize', () => {
 });
 
 const clock = new THREE.Clock();
-(function animate() {
+// Futuristic Floating Background Animation
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+// Create Floating Particles
+const geometry = new THREE.BufferGeometry();
+const vertices = [];
+for (let i = 0; i < 5000; i++) {
+  vertices.push(Math.random() * 2000 - 1000, Math.random() * 2000 - 1000, Math.random() * 2000 - 1000);
+}
+geometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+const material = new THREE.PointsMaterial({ color: 0xFF6D00, size: 2 });
+const particles = new THREE.Points(geometry, material);
+scene.add(particles);
+
+// Floating Geometric Shapes (Luxury feel)
+const group = new THREE.Group();
+for (let i = 0; i < 10; i++) {
+  const mesh = new THREE.Mesh(
+    new THREE.IcosahedronGeometry(Math.random() * 5 + 2),
+    new THREE.MeshStandardMaterial({ color: 0xD32F2F, wireframe: true })
+  );
+  mesh.position.set(Math.random() * 40 - 20, Math.random() * 40 - 20, Math.random() * 40 - 20);
+  group.add(mesh);
+}
+scene.add(group);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+scene.add(ambientLight);
+
+camera.position.z = 30;
+
+function animate() {
   requestAnimationFrame(animate);
-  const t = clock.getElapsedTime();
-  building.position.y = Math.sin(t*.5)*.4;
-  tRY += (mX*.12 - tRY)*.04;
-  tRX += (-mY*.08 - tRX)*.04;
-  building.rotation.y += (tRY - building.rotation.y)*.04;
-  building.rotation.x += (tRX - building.rotation.x)*.04;
-  redLight.intensity  = 2.5 + Math.sin(t*2)*1;
-  amberLight.intensity = 2.5 + Math.cos(t*1.5)*1;
+  particles.rotation.y += 0.0005;
+  group.rotation.x += 0.002;
+  group.rotation.y += 0.003;
   renderer.render(scene, camera);
-})();
+}
+animate();
 
 // ── Google Gemini API ──────────────────────────
 // Replace with your actual Gemini API key
